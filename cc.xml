@@ -1,0 +1,7 @@
+<?xml version="1.0" ?>
+<Projects>
+  <Project activity="Sleeping" lastBuildLabel="2310" lastBuildStatus="Success" lastBuildTime="2011-08-12T23:43:46Z" name="Trunk-CI" webUrl="https://some-jenkins-machine/job/www_trunk-ci/"/>
+  <Project activity="Sleeping" lastBuildLabel="3779" lastBuildStatus="Success" lastBuildTime="2011-08-13T12:01:23Z" name="Trunk-RELEASE" webUrl="https://some-jenkins-machine/job/www_trunk-release/"/>
+  <Project activity="Sleeping" lastBuildLabel="739" lastBuildStatus="Failed" lastBuildTime="2011-08-13T01:42:46Z" name="Test-Build" webUrl="https://some-jenkins-machine/job/www_etest/"/>
+  <Project activity="Building" lastBuildLabel="471" lastBuildStatus="Success" lastBuildTime="2011-08-13T07:07:36Z" name="Package-Build" webUrl="https://some-jenkins-machine/job/www_package/"/>
+</Projects>
