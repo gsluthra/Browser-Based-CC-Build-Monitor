@@ -8,6 +8,10 @@ BUILD MONITOR FOR JENKINS (using cc.xml)
  index.html 
 +-------------+
 Open this file in FIREFOX browser to see the status of the build. This HTML parses the cc.xml file in the local directory and shows the status of the build.
+This file won't run on Chrome browser due to security restrictions in reading a local cc.xml. Therefore if you wish to run this in Chromium browser, you
+will need to start chrome/chromium with following command:
+
+chromium-browser --allow-file-access-from-files index.html &
 
 
 +---------------------+
