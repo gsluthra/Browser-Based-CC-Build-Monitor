@@ -1,17 +1,113 @@
 <html>
 <head>
-	<title> BUILD STATUS </title>
+    <meta http-equiv="Refresh" content="60" charset="utf-8">
+    <title>EXPEDIA BUILD STATUS</title>
+    <style type="text/css">
+        body {
+            background-color: #000000;
+            font-family: Verdana, Consolas, Arial, sans-serif;
+        }
+
+        div.project {
+            margin-bottom: 20px;
+        }
+
+        div.success {
+            background-color: #00FF00;
+        }
+
+        div.failure {
+            color: #FFFFFF;
+            background-color: #FF0000;
+        }
+        span.test {
+            color: white;
+        }
+
+        div.inner {
+            font-size: 55px;
+        }
+
+        div.noticeboard {
+            background-color: #FFF68F;
+            font-size: 50px;
+            color: black;
+        }
+
+        img.icon {
+            height: 50px;
+            vertical-align: bottom;
+        }
+    </style>
+    <script src="jquery-1.6.2.min.js" type="text/javascript"></script>
+    <script>
+        function showFailedTestCount(build_id, report_name) {
+            $.get(report_name, function(failures){
+                $(build_id).append("&nbsp;&nbsp;<span class='test'>" + failures + "</span> ");
+            }, "text");
+        }
+ 
+        function displayStatus(buildnameStr, displayString) {
+            $.get('cc.xml', function(xmldoc) {
+                $(xmldoc).find('Project').each(function() {
+                    var $project = $(this);
+                    var nameOfProject = $project.attr("name");
+                    var lastBuildTime = $project.attr("lastBuildTime");
+                    var lastBuildStatus = $project.attr("lastBuildStatus");
+                    var currentActivity = $project.attr("activity");
+
+                    if (nameOfProject == buildnameStr) {
+                        var split = lastBuildTime.split('T');
+                        var times = split[1].split(':');
+
+                        var divContent = '<div class="project ' + lastBuildStatus.toLowerCase() + '">';
+                        divContent += '<div class="inner" id='+ nameOfProject + '>' + displayString;
+                        if (currentActivity == "Building") {
+                            divContent += '&nbsp;&nbsp;<img class="icon" src="InProgress.png"/>';
+                        }
+                        divContent += '</div>';
+                        divContent += '<b>Last Build: </b>' + split[0];
+                        divContent += '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<b>Time: </b> ' + times[0] + ':' + times[1];
+
+                        $('body').append(divContent + '</div>');
+                    }
+                });
+            });
+        }
+
+    </script>
 </head>
 
-	<frameset cols="50%,50%">
-		<frameset rows="50%,50%">
-			<frame src="page_1.htm">
-			<frame src="page_2.htm">
-		</frameset>
-		<frameset rows="50%,50%">
-			<frame src="page_3.htm">
-			<frame src="page_4.htm">
-		</frameset>
-	</frameset>
+<body>
 
+<br/>
+<br/>
+<br/>
+
+     <div id="notice" class="noticeboard"></div> 
+
+<br/>
+<br/>
+<br/>
+
+<script>
+
+    $.getJSON("settings.json", function (settings){
+
+        //alert("Noticeboard "+settings['noticeboard_text']);
+        $("#notice").html(settings['noticeboard_text']);
+
+        var display_list = settings['radiator_build_display_list'];
+        $.each(display_list, function(index, build){
+            displayStatus(build['build_name'], build['display_name']);
+        });
+
+        var builds = settings['cucumber_builds_for_statistics'];
+        for (var build in builds){
+            showFailedTestCount("#"+build, "reports/"+builds[build]['local_report_file']);
+        }
+    });
+
+</script>
+</body>
 </html>

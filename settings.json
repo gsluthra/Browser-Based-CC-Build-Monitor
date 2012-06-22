@@ -1,0 +1,36 @@
+{
+    "jenkins_ccxml_url":"https://some-jenkins-machine.com/view/All%20Builds/cc.xml",
+
+    "jenkins_cucumber_report_base_url":"https://some-jenkins-machine.com/view/Trunk%20All/job/",
+
+    "report_fetch_interval_in_seconds":120,
+
+    "noticeboard_text":"Noticeboard (Customize this to your needs)",
+
+    "radiator_build_display_list":[
+        {
+            "build_name":"Trunk-CI",
+            "display_name":"TRUNK*"
+        },
+        {
+            "build_name":"Test-Build",
+            "display_name":"SMOKE TESTS*"
+        },
+        {
+            "build_name":"Package-Build",
+            "display_name":"PACKAGE BUILD"
+        }
+    ],
+
+    "cucumber_builds_for_statistics":{
+        "Trunk-CI":{
+            "jenkins_report_name":"www_trunk-ci_report.html",
+            "local_report_file":"report-www_trunk-ci.txt"
+        },
+        "Test-Build":{
+            "jenkins_report_name":"www_etest_report.html",
+            "local_report_file":"report-www_etest.txt"
+        }
+    }
+
+}
